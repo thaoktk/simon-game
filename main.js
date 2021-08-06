@@ -86,7 +86,6 @@ function checkAnswers(currentLevel) {
             }
         }
     } else {
-
         playSound('wrong')
         $('body').addClass('game-over') // vl thẻ body cũng thêm class dc à
         setTimeout(function() {
@@ -116,7 +115,6 @@ function nextSequenceEasy() {
     $('#level-title').text('Level ' + level)
 
     var randomNumber = Math.floor(Math.random() * 4)
-
     var randomChosenColor = buttonColor[randomNumber]
     gamePattern.push(randomChosenColor)
 
@@ -129,6 +127,7 @@ function nextSequenceMedium() {
     userClickedPattern = [] // đặt lại làm mảng rỗng để ng chơi bấm lại từ đầu
     level++
     $('#level-title').text('Level ' + level)
+
     var randomNumber1 = Math.floor(Math.random() * 4)
     var randomChosenColor1 = buttonColor[randomNumber1]
 
@@ -152,6 +151,8 @@ function nextSequenceHard() {
     userClickedPattern = [] // đặt lại làm mảng rỗng để ng chơi bấm lại từ đầu
     level++
     $('#level-title').text('Level ' + level)
+
+    // số random 1
     var randomNumber1 = Math.floor(Math.random() * 4)
     var randomChosenColor1 = buttonColor[randomNumber1]
 
@@ -159,6 +160,7 @@ function nextSequenceHard() {
     $('#' + randomChosenColor1).fadeIn(100).fadeOut(100).fadeIn(100)
     playSound(randomChosenColor1)
 
+    // số random 2
     var randomNumber2 = Math.floor(Math.random() * 4)
     var randomChosenColor2 = buttonColor[randomNumber2]
 
@@ -168,6 +170,7 @@ function nextSequenceHard() {
         playSound(randomChosenColor2)
     }, 500)
 
+    // số random 3
     var randomNumber3 = Math.floor(Math.random() * 4)
     var randomChosenColor3 = buttonColor[randomNumber3]
 

@@ -70,7 +70,8 @@ html {
 }
 
 .how-to-play {
-    padding: 20px;
+    max-width: 350px;
+    padding: 10px 20px;
     position: absolute;
     z-index: 1;
     top: 50%;
@@ -97,8 +98,8 @@ html {
 .btn-play {
     border: none;
     outline: none;
-    padding: 15px;
-    margin : 0 10px;
+    padding: 10px;
+    margin : 10px 10px 20px 10px;
     background-color: #b2bac4;
     font-family: 'Press Start 2P', cursive;
 }
