@@ -1,12 +1,11 @@
-var buttonColors = ['red', 'blue', 'green', 'yellow']
+var buttonColor = ['red', 'green', 'blue', 'yellow']
 var gamePattern = []
 var userClickedPattern = []
 var level = 0
 var started = false
 
-
-function makeSound(name) {
-    var sound = new Audio('./assets/sounds/' + name + '.mp3');
+function playSound(name) {
+    var sound = new Audio("./assets/sounds/" + name + ".mp3");
     sound.play();
 
     sound.onended = function(){
@@ -17,30 +16,68 @@ function makeSound(name) {
     };
 }
 
-function animatePress(currentColor) {
-    var activeButton = $('#' + currentColor)
-    activeButton.addClass('pressed');
+function animatePress(name) {
+    var activeButton = '#' + name
+    $(activeButton).addClass('pressed')
     setTimeout(function() {
-        activeButton.removeClass('pressed');
+        $(activeButton).removeClass('pressed')
     }, 100)
 }
 
+$('.btn-play').click(function() {
+    if(!started) {
+        $('#level-title').text('Level ' + level)
+        started = true
+        $(this).addClass('active')
+        setTimeout(function() {
+            nextSequence()
+        }, 2000)
+        setTimeout(function() {
+            $('.how-to-play').css('display', 'none')
+        }, 1000)
+    }
+})
+
+$('.btn').click(function() {
+    var userChosenColor = $(this).attr('id')
+    userClickedPattern.push(userChosenColor)
+    playSound(userChosenColor)
+    animatePress(userChosenColor)
+    checkAnswers(userClickedPattern.length - 1)
+})
+
 function checkAnswers(currentLevel) {
     if (gamePattern[currentLevel] === userClickedPattern[currentLevel]) {
-        
-        if (userClickedPattern.length === gamePattern.length) { // nếu bấm đúng hết thì đi tiếp
-            setTimeout(function() {
-                nextSequence()
-            }, 1000)
+
+        if (userClickedPattern.length === gamePattern.length) {
+            var levelGame = $('.btn-play.active').text()
+            switch (levelGame) {
+                case 'Easy' :
+                    setTimeout(function() {
+                        nextSequence()
+                    }, 1200)
+                    break;
+                case 'Medium' :
+                    setTimeout(function() {
+                        nextSequence()
+                    }, 700)
+                    break;
+                case 'Hard' :
+                    setTimeout(function() {
+                        nextSequence()
+                    }, 200)
+                    break;
+            }
         }
     } else {
-        makeSound('wrong') // chạy nhạc wrong
-        $('body').addClass('game-over') // vl thẻ body cũng thêm class dc à
+
+        playSound('wrong')
+        $('body').addClass('game-over')
         setTimeout(function() {
             $('body').removeClass('game-over')
         }, 200)
 
-        $('#level-title').text('Game Over, Press Any Key to Restart')
+        $('#level-title').text('Game over. Good luck next time')
         startOver()
     }
 }
@@ -49,39 +86,21 @@ function startOver() {
     level = 0
     gamePattern = []
     started = false
+    $('.btn-play.active').removeClass('active')
+    setTimeout(function() {
+        $('.how-to-play').css('display', 'block')
+    }, 2000)
 }
 
-$(document).keypress(function() {
-    if (!started) {
-        $('#level-title').text('Level ' + level)
-        nextSequence()
-        started = true
-    }
-})
-
-$('.btn').click(function() {
-    var userChosenColor = $(this).attr('id')
-    userClickedPattern.push(userChosenColor);
-    makeSound(userChosenColor)
-    animatePress(userChosenColor)
-
-    checkAnswers(userClickedPattern.length - 1) // ktra ptu cuối của cái mảng ng dùng click có đúng với mảng game cho hay ko
-    // ví dụ bấm đúng đến số 3, nó nhảy số 3 ô hàm check, ktra ptu ở vtri thứ 3 của user có đúng với ptu ở vtri thứ 3 mảng game hay ko
-})
 
 function nextSequence() {
-    userClickedPattern = [] // đặt lại làm mảng rỗng để ng chơi bấm lại từ đầu
-    level++;
+    userClickedPattern = []
+    level++
     $('#level-title').text('Level ' + level)
-
     var randomNumber = Math.floor(Math.random() * 4)
+    var randomChosenColor = buttonColor[randomNumber]
 
-    var randomChosenColor = buttonColors[randomNumber]
     gamePattern.push(randomChosenColor)
-
-    $('#' + randomChosenColor).fadeIn(100).fadeOut(100).fadeIn(100) // animate flash
-    makeSound(randomChosenColor);
+    $('#' + randomChosenColor).fadeIn(100).fadeOut(100).fadeIn(100)
+    playSound(randomChosenColor)
 }
-
-
-
