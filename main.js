@@ -119,7 +119,7 @@ function nextSequenceEasy() {
     gamePattern.push(randomChosenColor)
 
     $('#' + randomChosenColor).fadeIn(100).fadeOut(100).fadeIn(100) // animate flash
-    makeSound(randomChosenColor);
+    playSound(randomChosenColor);
 }
 
 // level medium
