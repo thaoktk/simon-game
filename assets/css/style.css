@@ -102,6 +102,7 @@ html {
     margin : 10px 10px 20px 10px;
     background-color: #b2bac4;
     font-family: 'Press Start 2P', cursive;
+    border-radius: 5px;
 }
 
 .btn-play.active {
